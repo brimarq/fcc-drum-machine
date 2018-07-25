@@ -1,0 +1,67 @@
+:root {
+  --pad-size: 75px;
+
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#drum-machine {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+}
+
+#pad-bank {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  /* grid-template-areas: 
+      "editor"
+      "preview"; */
+}
+
+.drum-pad {
+  background-color: red;
+  height: var(--pad-size);
+  width: var(--pad-size);
+  border-radius: 20px;
+  text-align: center;
+  line-height: var(--pad-size);
+  cursor: pointer;
+}
+
+.drum-pad:hover {
+  background-color: blue;
+}
+
+.drum-pad:active {
+  background-color: yellow;
+}
