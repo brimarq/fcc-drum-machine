@@ -26,7 +26,7 @@ Once you're done, submit the URL to your working project with all its tests pass
 Remember to use the Read-Search-Ask method if you get stuck.
 */
 
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -56,26 +56,59 @@ const data = {
   ]
 }
 
+const defaultPadClassName = "drum-pad";
+const clickedPadClassName = "drum-pad drum-pad-clicked";
 
-class Pad extends Component {
+class Pad extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      padClassName: defaultPadClassName,
+    };
     this.audioElement = React.createRef();
+    this.handleClick = this.handleClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.setPadClassName = this.setPadClassName.bind(this);
   }
   
   componentDidMount() {
     this.audioElement.current.volume = this.props.volume;
+    document.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentDidUpdate() {
     this.audioElement.current.volume = this.props.volume;
   }
 
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  setPadClassName(str) {
+    this.setState(() => ({padClassName: str}));
+  }
+
+  handleClick() {
+    if (this.props.isPwrOn) {
+      this.audioElement.current.play();
+      this.props.displaySoundName(this.props.name);
+      this.setPadClassName(clickedPadClassName);
+      setTimeout(this.setPadClassName, 80, defaultPadClassName);
+    }
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === this.props.keyCode) {
+      this.audioElement.current.click();
+    }
+  }
+
   render() {
+    // console.log("Pad " + this.props.kbdKey + " render called");
     return (
-      <button id={this.props.padId} className="drum-pad" name={this.props.name} onClick={this.props.handlePadClick}>{this.props.kbdKey}
+      <div id={this.props.padId} className={this.state.padClassName} name={this.props.name} onClick={this.handleClick} onKeyDown={this.handleKeyDown}>{this.props.kbdKey}
         <audio id={this.props.audioId} src={this.props.source} className="clip" ref={this.audioElement}></audio>
-      </button>
+      </div>
     )
   }
 }
@@ -83,6 +116,7 @@ class Pad extends Component {
 
 class PadBank extends Component {
   render() {
+    console.log("PadBank render called");
     let bank = (this.props.isBank1 ? data.bank1 : data.bank2);
     const baseUrl = "https://s3.amazonaws.com/freecodecamp/drums/";
     return (
@@ -93,10 +127,12 @@ class PadBank extends Component {
             padId={pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()} 
             name={pad.name} 
             kbdKey={pad.kbdKey} 
+            keyCode={pad.keyCode} 
             audioId={pad.kbdKey} 
             source={baseUrl + pad.sound} 
-            volume={this.props.volume}
-            handlePadClick={this.props.handlePadClick}
+            volume={this.props.volume} 
+            displaySoundName={this.props.displaySoundName} 
+            isPwrOn={this.props.isPwrOn} 
           />
         ))}
       </div>
@@ -106,21 +142,41 @@ class PadBank extends Component {
 
 class Controls extends Component {
   render() {
+    console.log("Controls render called");
     return (
       <div id="controls">
-        <p>Controls</p>
-        <label className="switch">Power
-          <input type="checkbox" name="power" defaultChecked onChange={this.props.handleChange}/>
-          <span className="slider round"></span>
-        </label>
+        <p>FCC DrumMachine</p>
         <div id="display">{this.props.display}</div>
+        <div className="switch-container">
+          {/* <span>Power</span> */}
+          <label className="switch">
+            <input type="checkbox" name="power" defaultChecked onChange={this.props.handleChange}/>
+            <span className="switch-slider"></span>
+          </label>
+        </div>
+        <div className="switch-container">
+          {/* <span>Bank</span> */}
+          <label className="switch">
+            <input type="checkbox" name="bank" defaultChecked onChange={this.props.handleChange}/>
+            <span className="switch-slider"></span>
+          </label>
+        </div>
         <div className="slidecontainer">
           <input type="range" min="0" max="1" step=".01" defaultValue={this.props.volume} className="slider" id="myRange" onChange={this.props.handleChange}/>
         </div>
-        <label className="switch">Bank
-          <input type="checkbox" name="bank" defaultChecked onChange={this.props.handleChange}/>
-          <span className="slider round"></span>
-        </label>
+        <div className="onoffswitch-container">
+          <span className="onoffswitch-title">Power</span>
+          <div className="onoffswitch">
+            <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" />
+            {/*  */}
+            <label className="onoffswitch-label" for="myonoffswitch">
+                <span className="onoffswitch-inner"></span>
+                <span className="onoffswitch-switch"></span>
+            </label>
+          </div>
+        </div>
+        
+
       </div>
     )
   }
@@ -136,8 +192,12 @@ class DrumMachine extends Component {
       volume: "0.4",
     };
     
+    this.displaySoundName = this.displaySoundName.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handlePadClick = this.handlePadClick.bind(this);
+  }
+
+  displaySoundName(name) {
+    this.setState(() => ({display: name}));
   }
 
   handleChange(e) {
@@ -166,23 +226,15 @@ class DrumMachine extends Component {
     }
   }
 
-  handlePadClick(e) {
-    let element = e.target;
-    if (!this.state.isPwrOn) return;
-    element.firstElementChild.play();
-    this.setState(() => ({
-      display: element.name
-    }));
-  }
-
   render() {
+    console.log("DrumMachine render called");
     return (
       <div id="drum-machine">
         <PadBank 
           isPwrOn={this.state.isPwrOn} 
           volume={this.state.volume} 
           isBank1={this.state.isBank1} 
-          handlePadClick={this.handlePadClick}
+          displaySoundName={this.displaySoundName} 
         />
         <Controls 
           isPwrOn={this.state.isPwrOn} 
@@ -198,53 +250,24 @@ class DrumMachine extends Component {
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  // Add these to the pads instead?
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyDown);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyDown);
-  }
-
-  handleKeyDown(e) {
-    const kbdKeys = ["Q", "q", "W", "w",  "E", "e", "A", "a", "S", "s", "D", "d", "Z", "z", "X", "x", "C", "c"];
-    const keyCodes = [81, 87, 69, 65, 83, 68, 90, 88, 67];
-    let keyUpperCase;
-    let btn;
-    if (e.key && kbdKeys.includes(e.key)) {
-      keyUpperCase = e.key.toUpperCase();
-    }
-    else {
-      // Accomodation for fcc testing suite that tests for .keyCode instead of .key even though the former is depreciated.
-      if (keyCodes.includes(e.keyCode)) {
-        keyUpperCase = String.fromCharCode(e.keyCode);
-      }
-    }
-
-    if (keyUpperCase) {
-      btn = document.querySelector("audio#" + keyUpperCase + ".clip").closest('button');
-      btn.focus();
-      btn.click();
-    }
-    
-  }
 
   render() {
+    console.log("App render called");
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+        <header className="App-header">
+          {/* <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1> */}
         </header>
-        <p className="App-intro">
+        {/* <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p> */}
-        <DrumMachine />
+        <main className="App-main">
+        
+          <DrumMachine />
+          
+        </main>
+        <footer className="App-footer"></footer>
       </div>
     );
     
