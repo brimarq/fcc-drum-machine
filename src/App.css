@@ -28,6 +28,8 @@
     -webkit-radial-gradient(0% 50%, 50% 10%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
     -webkit-radial-gradient(100% 50%, 50% 06%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%)
   ;
+  --switch-inner-on-color: #2196F3;
+  --switch-inner-off-color: #EEEEEE;
 }
 
 body {
@@ -157,65 +159,130 @@ body {
   margin-left: 2px; */
 }
 
- /* The switch - the box around the slider */
+/*** CHECKBOX SWITCHES ***/
+
+.switch-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+}
+.switch-title {
+  text-align: left;
+}
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+  /* display: inline-block; */
+  position: relative; 
+  width: 70px;
+  -webkit-user-select:none; 
+  -moz-user-select:none; 
+  -ms-user-select: none;
+}
+.switch-checkbox {
+  display: none;
 }
 
-/* Hide default HTML checkbox */
-.switch input {display:none;}
-
-/* The slider */
-.switch-slider {
-  position: absolute;
+/* .onoffswitch-title {
+  display: inline-block;
+} */
+.switch-label {
+  display: block; 
+  overflow: hidden; 
   cursor: pointer;
+  border: 2px solid #999999; 
+  border-radius: 34px;
+}
+
+.switch-inner {
+  display: block; 
+  width: 200%; 
+  margin-left: -100%;
+  transition: margin 0.1s ease-in 0s;
+}
+.switch-inner::before, .switch-inner::after {
+  display: inline-block; 
+  width: 50%; 
+  height: 34px; 
+  padding: 0; 
+  line-height: 34px;
+  font-size: 10px; 
+  color: white; 
+  font-family: Trebuchet, Arial, sans-serif; 
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.switch-inner::before {
+  text-align: left;
+  content: "ON";
+  padding-left: 10px;
+  background-color: var(--switch-inner-on-color); 
+  color: #FFFFFF;
+}
+.switch-inner::after {
+  content: "OFF";
+  padding-right: 10px;
+  background-color: var(--switch-inner-off-color); 
+  color: #999999;
+  text-align: right;
+}
+
+.switch label[for="switch-bank"] .switch-inner::before {
+  content: "1";
+  padding-left: 15px;
+}
+
+.switch label[for="switch-bank"] .switch-inner::after {
+  content: "2";
+  padding-right: 15px;
+}
+
+.switch-switch {
+  display: block; 
+  width: 26px; 
+  margin: 4px;
+  /* background: #FFFFFF; */
+  background-image: var(--brushed-metal-radial);
+
+  position: absolute; 
+  top: 0; 
+  bottom: 0;
+  right: 32px;
+  border: 2px solid #999999; 
+  border-radius: 34px;
+  transition: all 0.1s ease-in 0s; 
+}
+
+.switch-switch::before, .switch-switch::after {
+  content: "";
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  border-radius: 34px;
-  -webkit-transition: .1s;
-  transition: .1s;
-}
-
-.switch-slider::before {
   position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  -webkit-transition: .1s;
-  transition: .1s;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background-image: var(--brushed-metal-radial-conical);
 }
 
+.switch-switch::before { transform: rotate( 65deg); }
+.switch-switch::after { transform: rotate(-65deg); }
 
-input:checked + .switch-slider {
-  background-color: #2196F3;
+
+.switch-checkbox:checked + .switch-label .switch-inner {
+  margin-left: 0;
 }
-
-input:focus + .switch-slider {
-  box-shadow: 0 0 1px #2196F3;
+.switch-checkbox:checked + .switch-label .switch-switch {
+  right: 0px; 
 }
-
-input:checked + .switch-slider::before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
 
 /*** VOLUME SLIDER ***/
-.slidecontainer {
+.slider-container {
+  display: grid;
   width: 100%; /* Width of the outside container */
 }
 
+.slider-title {
+  /* width: 100%; */
+  text-align: left;
+}
 /* The slider itself */
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
@@ -223,7 +290,8 @@ input:checked + .switch-slider::before {
   width: 100%; /* Full-width */
   height: 25px; /* Specified height */
   border-radius: 5px;
-  background: #d3d3d3; /* Grey background */
+  /* background: #d3d3d3; /* Grey background */
+  background-color: var(--switch-inner-on-color);
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -231,28 +299,59 @@ input:checked + .switch-slider::before {
 }
 
 /* Mouse-over effects */
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
-}
+/* .slider:hover {
+  opacity: 1; 
+} */
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
+  position: relative;
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
   border-radius: 50%;
-  background: #4CAF50; /* Green background */
+  background-image: var(--brushed-metal-radial);
   cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
+  position: relative;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
   border-radius: 50%;
-  background: #4CAF50; /* Green background */
+  background-image: var(--brushed-metal-radial);
   cursor: pointer; /* Cursor on hover */
 }
+
+.slider::-webkit-slider-thumb::before, .slider::-webkit-slider-thumb::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background-image: var(--brushed-metal-radial-conical);
+}
+
+.slider::-webkit-slider-thumb::before { transform: rotate( 65deg); }
+.slider::-webkit-slider-thumb::after { transform: rotate(-65deg); }
+
+.slider::-moz-range-thumb::before, .slider::-moz-range-thumb::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background-image: var(--brushed-metal-radial-conical);
+}
+
+.slider::-moz-range-thumb::before { transform: rotate( 65deg); }
+.slider::-moz-range-thumb::after { transform: rotate(-65deg); }
+
 
 
 @media(min-width: 415px) {
@@ -269,106 +368,4 @@ input:checked + .switch-slider::before {
     width: var(--pad-size);
     line-height: var(--pad-size);
   }
-}
-
-.onoffswitch-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-}
-.onoffswitch-title {
-  /* display: inline-block; */
-  /* line-height: 34px; */
-}
-.onoffswitch {
-  /* display: inline-block; */
-  position: relative; 
-  width: 70px;
-  -webkit-user-select:none; 
-  -moz-user-select:none; 
-  -ms-user-select: none;
-}
-.onoffswitch-checkbox {
-  display: none;
-}
-
-/* .onoffswitch-title {
-  display: inline-block;
-} */
-.onoffswitch-label {
-  display: block; 
-  overflow: hidden; 
-  cursor: pointer;
-  border: 2px solid #999999; 
-  border-radius: 34px;
-}
-
-.onoffswitch-inner {
-  display: block; 
-  width: 200%; 
-  margin-left: -100%;
-  transition: margin 0.1s ease-in 0s;
-}
-.onoffswitch-inner:before, .onoffswitch-inner:after {
-  display: inline-block; 
-  width: 50%; 
-  height: 34px; 
-  padding: 0; 
-  line-height: 34px;
-  font-size: 10px; 
-  color: white; 
-  font-family: Trebuchet, Arial, sans-serif; 
-  font-weight: bold;
-  box-sizing: border-box;
-}
-.onoffswitch-inner:before {
-  text-align: left;
-  content: "ON";
-  padding-left: 10px;
-  background-color: #2196F3; 
-  color: #FFFFFF;
-}
-.onoffswitch-inner:after {
-  content: "OFF";
-  padding-right: 10px;
-  background-color: #EEEEEE; 
-  color: #999999;
-  text-align: right;
-}
-.onoffswitch-switch {
-  display: block; 
-  width: 26px; 
-  margin: 4px;
-  /* background: #FFFFFF; */
-  background-image: var(--brushed-metal-radial);
-
-  position: absolute; 
-  top: 0; 
-  bottom: 0;
-  right: 32px;
-  border: 2px solid #999999; 
-  border-radius: 34px;
-  transition: all 0.1s ease-in 0s; 
-}
-
-.onoffswitch-switch::before, .onoffswitch-switch::after {
-  content: "";
-  top: 0;
-  left: 0;
-  position: absolute;
-  width: inherit;
-  height: inherit;
-  border-radius: inherit;
-  background-image: var(--brushed-metal-radial-conical);
-}
-
-.onoffswitch-switch::before { transform: rotate( 65deg); }
-.onoffswitch-switch::after { transform: rotate(-65deg); }
-
-
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-  margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-  right: 0px; 
 }

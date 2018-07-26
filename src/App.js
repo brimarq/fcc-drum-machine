@@ -147,36 +147,34 @@ class Controls extends Component {
       <div id="controls">
         <p>FCC DrumMachine</p>
         <div id="display">{this.props.display}</div>
+
         <div className="switch-container">
-          {/* <span>Power</span> */}
-          <label className="switch">
-            <input type="checkbox" name="power" defaultChecked onChange={this.props.handleChange}/>
-            <span className="switch-slider"></span>
-          </label>
-        </div>
-        <div className="switch-container">
-          {/* <span>Bank</span> */}
-          <label className="switch">
-            <input type="checkbox" name="bank" defaultChecked onChange={this.props.handleChange}/>
-            <span className="switch-slider"></span>
-          </label>
-        </div>
-        <div className="slidecontainer">
-          <input type="range" min="0" max="1" step=".01" defaultValue={this.props.volume} className="slider" id="myRange" onChange={this.props.handleChange}/>
-        </div>
-        <div className="onoffswitch-container">
-          <span className="onoffswitch-title">Power</span>
-          <div className="onoffswitch">
-            <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" />
-            {/*  */}
-            <label className="onoffswitch-label" for="myonoffswitch">
-                <span className="onoffswitch-inner"></span>
-                <span className="onoffswitch-switch"></span>
+          <span className="switch-title">Power</span>
+          <div className="switch">
+            <input type="checkbox" name="power" id="switch-power" className="switch-checkbox" defaultChecked onChange={this.props.handleChange}/>
+            <label className="switch-label" for="switch-power">
+                <span className="switch-inner"></span>
+                <span className="switch-switch"></span>
             </label>
           </div>
         </div>
-        
 
+        <div className="switch-container">
+          <span className="switch-title">Bank</span>
+          <div className="switch">
+            <input type="checkbox" name="bank" id="switch-bank" className="switch-checkbox" defaultChecked onChange={this.props.handleChange}/>
+            <label className="switch-label" for="switch-bank">
+                <span className="switch-inner"></span>
+                <span className="switch-switch"></span>
+            </label>
+          </div>
+        </div>
+
+        <div className="slider-container">
+          <span className="slider-title">Volume</span>
+          <input type="range" min="0" max="1" step=".01" defaultValue={this.props.volume} className="slider" id="myRange" onChange={this.props.handleChange}/>
+        </div>
+        
       </div>
     )
   }
