@@ -1,7 +1,33 @@
+/* Brushed metal css effect H/T: simurai https://codepen.io/simurai/pen/DwJdq */
+
 :root {
   --pad-size-sm: 75px;
   --pad-size: 100px;
-
+  --brushed-metal-linear: 
+    -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
+    -webkit-repeating-linear-gradient(left, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
+    -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),
+    
+    linear-gradient(180deg, hsl(0,0%,78%) 0%, hsl(0,0%,90%) 47%, hsl(0,0%,78%) 53%, hsl(0,0%,70%)100%)
+  ;
+  --brushed-metal-radial: 
+    -webkit-radial-gradient(50% 0%, 8% 50%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient(50% 100%, 12% 50%, hsla(0,0%,100%,.6) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient(0% 50%, 50% 7%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+    -webkit-radial-gradient(100% 50%, 50% 5%, hsla(0,0%,100%,.5) 0%, hsla(0,0%,100%,0) 100%),
+  
+    -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0,0%, 0%,0) 0%, hsla(0,0%, 0%,0) 3%, hsla(0,0%, 0%,.1) 3.5%),
+    -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 6%, hsla(0,0%,100%,.1) 7.5%),
+    -webkit-repeating-radial-gradient(50% 50%, 100% 100%, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.2) 2.2%),
+  
+    -webkit-radial-gradient(50% 50%, 200% 50%, hsla(0,0%,90%,1) 5%, hsla(0,0%,85%,1) 30%, hsla(0,0%,60%,1) 100%)
+  ; 
+  --brushed-metal-radial-conical: 
+    -webkit-radial-gradient(50% 0%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient(50% 100%, 10% 50%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient(0% 50%, 50% 10%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%),
+    -webkit-radial-gradient(100% 50%, 50% 06%, hsla(0,0%,0%,.1) 0%, hsla(0,0%,0%,0) 100%)
+  ;
 }
 
 body {
@@ -63,7 +89,9 @@ body {
 
 #drum-machine {
   grid-area: drummachine;
-  background-color: #EEEEEE;
+  /* background-color: #EEEEEE; */
+  background-image: var(--brushed-metal-linear);
+  background-size: 20px;
   display: grid;
   grid-gap: 20px;
   grid-template-columns: auto;
@@ -311,7 +339,9 @@ input:checked + .switch-slider::before {
   display: block; 
   width: 26px; 
   margin: 4px;
-  background: #FFFFFF;
+  /* background: #FFFFFF; */
+  background-image: var(--brushed-metal-radial);
+
   position: absolute; 
   top: 0; 
   bottom: 0;
@@ -320,6 +350,22 @@ input:checked + .switch-slider::before {
   border-radius: 34px;
   transition: all 0.1s ease-in 0s; 
 }
+
+.onoffswitch-switch::before, .onoffswitch-switch::after {
+  content: "";
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: inherit;
+  background-image: var(--brushed-metal-radial-conical);
+}
+
+.onoffswitch-switch::before { transform: rotate( 65deg); }
+.onoffswitch-switch::after { transform: rotate(-65deg); }
+
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
   margin-left: 0;
 }
