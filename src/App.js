@@ -203,24 +203,40 @@ class DrumMachine extends Component {
       // setState is asynchronous! Must wait for it to finish before using new state, hence the callback.
       this.setState((prevState) => ({
         isPwrOn: !prevState.isPwrOn,
-        display: prevState.isPwrOn ? "Power Off" : "Power On"
+        display: prevState.isPwrOn ? "" : "Power On"
         })
       );
     }
     else if (e.target.name === "bank") {
-      this.setState((prevState) => ({
-        isBank1: !prevState.isBank1,
-        display: prevState.isBank1 ? "Bank 2" : "Bank 1"
-        })
-      );
+      if (this.state.isPwrOn) {
+        this.setState((prevState) => ({
+          isBank1: !prevState.isBank1,
+          display: prevState.isBank1 ? "Bank 2" : "Bank 1"
+          })
+        );
+      }
+      else {
+        this.setState((prevState) => ({
+          isBank1: !prevState.isBank1
+          })
+        );
+      }
     }
     else {
       let newVolume = e.target.value;
-      this.setState(() => ({
-        volume: newVolume,
-        display: "Volume: " + Math.round(newVolume * 100) + "%"
-        })
-      );
+      if (this.state.isPwrOn) {
+        this.setState(() => ({
+          volume: newVolume,
+          display: "Volume: " + Math.round(newVolume * 100) + "%"
+          })
+        );
+      }
+      else {
+        this.setState(() => ({
+          volume: newVolume
+          })
+        );
+      }
     }
   }
 
