@@ -27,7 +27,7 @@ Remember to use the Read-Search-Ask method if you get stuck.
 */
 
 import React, { Component, PureComponent } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 const data = {
@@ -114,9 +114,9 @@ class Pad extends PureComponent {
 }
 
 
-class PadBank extends Component {
+class PadBank extends PureComponent {
   render() {
-    console.log("PadBank render called");
+    // console.log("PadBank render called");
     let bank = (this.props.isBank1 ? data.bank1 : data.bank2);
     const baseUrl = "https://s3.amazonaws.com/freecodecamp/drums/";
     return (
@@ -140,9 +140,9 @@ class PadBank extends Component {
   }
 }
 
-class Controls extends Component {
+class Controls extends PureComponent {
   render() {
-    console.log("Controls render called");
+    // console.log("Controls render called");
     return (
       <div id="controls">
         <p>FCC DrumMachine</p>
@@ -152,7 +152,7 @@ class Controls extends Component {
           <span className="switch-title">Power</span>
           <div className="switch">
             <input type="checkbox" name="power" id="switch-power" className="switch-checkbox" defaultChecked onChange={this.props.handleChange}/>
-            <label className="switch-label" for="switch-power">
+            <label className="switch-label" htmlFor="switch-power">
                 <span className="switch-inner"></span>
                 <span className="switch-switch"></span>
             </label>
@@ -163,7 +163,7 @@ class Controls extends Component {
           <span className="switch-title">Bank</span>
           <div className="switch">
             <input type="checkbox" name="bank" id="switch-bank" className="switch-checkbox" defaultChecked onChange={this.props.handleChange}/>
-            <label className="switch-label" for="switch-bank">
+            <label className="switch-label" htmlFor="switch-bank">
                 <span className="switch-inner"></span>
                 <span className="switch-switch"></span>
             </label>
@@ -241,7 +241,7 @@ class DrumMachine extends Component {
   }
 
   render() {
-    console.log("DrumMachine render called");
+    // console.log("DrumMachine render called");
     return (
       <div id="drum-machine">
         <PadBank 
@@ -262,11 +262,9 @@ class DrumMachine extends Component {
   }
 }
 
-
 class App extends Component {
-
   render() {
-    console.log("App render called");
+    // console.log("App render called");
     return (
       <div className="App">
         <header className="App-header"></header>
