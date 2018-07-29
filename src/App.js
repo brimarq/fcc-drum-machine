@@ -48,7 +48,7 @@ const data = {
     {kbdKey: "W", keyCode: 87, name: "Chord 2", sound: "Chord_2.mp3"},
     {kbdKey: "E", keyCode: 69, name: "Chord 3", sound: "Chord_3.mp3"},
     {kbdKey: "A", keyCode: 65, name: "Shaker", sound: "Give_us_a_light.mp3"},
-    {kbdKey: "S", keyCode: 83, name: "Open HH (Dry)", sound: "Dry_Ohh.mp3"},
+    {kbdKey: "S", keyCode: 83, name: "Open HH Dry", sound: "Dry_Ohh.mp3"},
     {kbdKey: "D", keyCode: 68, name: "Closed HH", sound: "Bld_H1.mp3"},
     {kbdKey: "Z", keyCode: 90, name: "Punchy Kick", sound: "punchy_kick_1.mp3"},
     {kbdKey: "X", keyCode: 88, name: "Side Stick", sound: "side_stick_1.mp3"},
@@ -107,7 +107,7 @@ class Pad extends PureComponent {
     // console.log("Pad " + this.props.kbdKey + " render called");
     return (
       <div id={this.props.padId} className={this.state.padClassName} name={this.props.name} onClick={this.handleClick} onKeyDown={this.handleKeyDown}>{this.props.kbdKey}
-        <audio id={this.props.audioId} src={this.props.source} className="clip" ref={this.audioElement}></audio>
+        <audio id={this.props.audioId}  className="clip" src={this.props.source} type="audio/mpeg" ref={this.audioElement}></audio>
       </div>
     )
   }
@@ -269,17 +269,9 @@ class App extends Component {
     console.log("App render called");
     return (
       <div className="App">
-        <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1> */}
-        </header>
-        {/* <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p> */}
+        <header className="App-header"></header>
         <main className="App-main">
-        
           <DrumMachine />
-          
         </main>
         <footer className="App-footer"></footer>
       </div>
