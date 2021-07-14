@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DrumMachine from './components/DrumMachine';
 import './App.css';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     // console.log("App render called");
     return (
