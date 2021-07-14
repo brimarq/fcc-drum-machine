@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react';
-import './App.css';
 import Pad from './components/Pad';
+import './App.css';
 
 const data = {
   baseUrl: 'https://s3.amazonaws.com/freecodecamp/drums/',

@@ -1,0 +1,45 @@
+.drum-pad {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #eeeeee;
+  background: radial-gradient(
+    circle,
+    rgba(83, 83, 83, 1) 0%,
+    rgba(73, 73, 73, 1) 25%,
+    rgba(68, 68, 68, 1) 50%,
+    rgba(48, 48, 48, 1) 90%
+  );
+  height: var(--pad-size-sm);
+  width: var(--pad-size-sm);
+  border-radius: 20px;
+  text-align: center;
+  line-height: var(--pad-size-sm);
+  cursor: pointer;
+  font-size: 1.125em;
+  box-shadow: inset -2px 2px 5px 0px rgba(255, 255, 255, 0.5),
+    inset 2px -2px 5px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset -2px 2px 5px 0px rgba(255, 255, 255, 0.5),
+    inset 2px -2px 5px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset -2px 2px 5px 0px rgba(255, 255, 255, 0.5),
+    inset 2px -2px 5px 0px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.drum-pad-clicked {
+  background: radial-gradient(
+    circle,
+    rgba(15, 133, 255, 1) 0%,
+    rgba(15, 133, 255, 1) 25%,
+    rgba(4, 116, 233, 1) 50%,
+    rgba(0, 95, 193, 1) 90%
+  );
+  box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
+    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
+    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
+  -moz-box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
+    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
+  font-size: 1.063em;
+}

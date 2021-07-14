@@ -1,4 +1,5 @@
 import React from 'react';
+import './Pad.css';
 
 interface PadProps {
   key: string; // {pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()}
