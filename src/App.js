@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import './App.css';
+import Pad from './components/Pad';
 
 const data = {
   baseUrl: 'https://s3.amazonaws.com/freecodecamp/drums/',
@@ -31,76 +32,6 @@ const data = {
     { kbdKey: 'C', keyCode: 67, name: 'Snare', sound: 'Brk_Snr.mp3' },
   ],
 };
-
-const defaultPadClassName = 'drum-pad';
-const clickedPadClassName = 'drum-pad drum-pad-clicked';
-
-class Pad extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      padClassName: defaultPadClassName,
-    };
-    this.audioElement = React.createRef();
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.setPadClassName = this.setPadClassName.bind(this);
-  }
-
-  componentDidMount() {
-    this.audioElement.current.volume = this.props.volume;
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentDidUpdate() {
-    this.audioElement.current.volume = this.props.volume;
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  setPadClassName(str) {
-    this.setState(() => ({ padClassName: str }));
-  }
-
-  handleClick() {
-    if (this.props.isPwrOn) {
-      this.audioElement.current.play();
-      this.props.displaySoundName(this.props.name);
-      this.setPadClassName(clickedPadClassName);
-      setTimeout(this.setPadClassName, 80, defaultPadClassName);
-    }
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === this.props.keyCode) {
-      this.audioElement.current.click();
-    }
-  }
-
-  render() {
-    // console.log("Pad " + this.props.kbdKey + " render called");
-    return (
-      <div
-        id={this.props.padId}
-        className={this.state.padClassName}
-        name={this.props.name}
-        onClick={this.handleClick}
-        onKeyDown={this.handleKeyDown}
-      >
-        {this.props.kbdKey}
-        <audio
-          id={this.props.audioId}
-          className="clip"
-          src={this.props.source}
-          type="audio/mpeg"
-          ref={this.audioElement}
-        ></audio>
-      </div>
-    );
-  }
-}
 
 class PadBank extends PureComponent {
   render() {
