@@ -9,6 +9,7 @@ interface PadBankProps {
   displaySoundName: (name: string) => void;
 }
 
+// prettier-ignore
 const data = {
   baseUrl: 'https://s3.amazonaws.com/freecodecamp/drums/',
   bank1: [
@@ -29,41 +30,35 @@ const data = {
     { kbdKey: 'A', keyCode: 65, name: 'Shaker', sound: 'Give_us_a_light.mp3' },
     { kbdKey: 'S', keyCode: 83, name: 'Open HH Dry', sound: 'Dry_Ohh.mp3' },
     { kbdKey: 'D', keyCode: 68, name: 'Closed HH', sound: 'Bld_H1.mp3' },
-    {
-      kbdKey: 'Z',
-      keyCode: 90,
-      name: 'Punchy Kick',
-      sound: 'punchy_kick_1.mp3',
-    },
+    { kbdKey: 'Z', keyCode: 90, name: 'Punchy Kick', sound: 'punchy_kick_1.mp3' },
     { kbdKey: 'X', keyCode: 88, name: 'Side Stick', sound: 'side_stick_1.mp3' },
     { kbdKey: 'C', keyCode: 67, name: 'Snare', sound: 'Brk_Snr.mp3' },
   ],
 };
 
-export default class PadBank extends React.PureComponent<PadBankProps> {
-  render() {
-    // console.log("PadBank render called");
-    let bank = this.props.isBank1 ? data.bank1 : data.bank2;
-    const baseUrl = 'https://s3.amazonaws.com/freecodecamp/drums/';
-    return (
-      <div id="pad-bank">
-        {bank.map(pad => {
-          const id = pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
-          return (
-            <Pad
-              key={id}
-              id={id}
-              name={pad.name}
-              kbdKey={pad.kbdKey}
-              keyCode={pad.keyCode}
-              source={baseUrl + pad.sound}
-              volume={this.props.volume}
-              displaySoundName={this.props.displaySoundName}
-              isPwrOn={this.props.isPwrOn}
-            />
-          );
-        })}
-      </div>
-    );
-  }
+function PadBank(props: PadBankProps) {
+  const { isPwrOn, volume, isBank1, displaySoundName } = props;
+  const bank = isBank1 ? data.bank1 : data.bank2;
+  return (
+    <div id="pad-bank">
+      {bank.map(pad => {
+        const id = pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+        return (
+          <Pad
+            key={id}
+            id={id}
+            name={pad.name}
+            kbdKey={pad.kbdKey}
+            keyCode={pad.keyCode}
+            source={data.baseUrl + pad.sound}
+            volume={volume}
+            displaySoundName={displaySoundName}
+            isPwrOn={isPwrOn}
+          />
+        );
+      })}
+    </div>
+  );
 }
+
+export default PadBank;
