@@ -47,20 +47,22 @@ export default class PadBank extends React.PureComponent<PadBankProps> {
     const baseUrl = 'https://s3.amazonaws.com/freecodecamp/drums/';
     return (
       <div id="pad-bank">
-        {bank.map(pad => (
-          <Pad
-            key={pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()}
-            padId={pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()}
-            name={pad.name}
-            kbdKey={pad.kbdKey}
-            keyCode={pad.keyCode}
-            audioId={pad.kbdKey}
-            source={baseUrl + pad.sound}
-            volume={this.props.volume}
-            displaySoundName={this.props.displaySoundName}
-            isPwrOn={this.props.isPwrOn}
-          />
-        ))}
+        {bank.map(pad => {
+          const id = pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+          return (
+            <Pad
+              key={id}
+              id={id}
+              name={pad.name}
+              kbdKey={pad.kbdKey}
+              keyCode={pad.keyCode}
+              source={baseUrl + pad.sound}
+              volume={this.props.volume}
+              displaySoundName={this.props.displaySoundName}
+              isPwrOn={this.props.isPwrOn}
+            />
+          );
+        })}
       </div>
     );
   }

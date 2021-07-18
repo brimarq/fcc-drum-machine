@@ -2,88 +2,94 @@ import React from 'react';
 import './Pad.css';
 
 interface PadProps {
-  key: string; // {pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()}
-  padId: string; // {pad.name.replace(/[^A-Za-z0-9]/g, '').toLowerCase()}
-  name: string; // {pad.name}
-  kbdKey: string; // {pad.kbdKey}
-  keyCode: number; // {pad.keyCode}
-  audioId: string; // {pad.kbdKey}
-  source: string; // {baseUrl + pad.sound}
-  volume: number; // {this.props.volume}
-  displaySoundName: (name: string) => void; // {this.props.displaySoundName}
-  isPwrOn: boolean; // {this.props.isPwrOn}
+  id: string;
+  name: string;
+  kbdKey: string;
+  keyCode: number;
+  source: string;
+  volume: number;
+  displaySoundName: (name: string) => void;
+  isPwrOn: boolean;
 }
-const defaultPadClassName = 'drum-pad';
-const clickedPadClassName = 'drum-pad drum-pad-clicked';
 
-export default class Pad extends React.PureComponent<
-  PadProps,
-  { padClassName: string }
-> {
-  private audioElement = React.createRef<HTMLAudioElement>();
+function Pad(props: PadProps) {
+  const {
+    id,
+    name,
+    kbdKey,
+    keyCode,
+    source,
+    volume,
+    displaySoundName,
+    isPwrOn,
+  } = props;
 
-  constructor(props: PadProps) {
-    super(props);
-    this.state = {
-      padClassName: defaultPadClassName,
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const padBtnRef = React.useRef<HTMLButtonElement>(null);
+
+  React.useEffect(() => {
+    function handleKeydown(event: KeyboardEvent) {
+      // keydown adds class simulate buton click; but, keyup actually trigggers click
+      // then removes active class
+      function handleKeyup(_: KeyboardEvent) {
+        padBtnRef.current!.classList.remove('active');
+        padBtnRef.current!.click();
+        window.removeEventListener('keyup', handleKeyup, true);
+      }
+
+      // KeyboardEvent.keyCode is depreciated
+      // ref: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+      if (event.defaultPrevented) {
+        return; // Should do nothing if the default action has been cancelled
+      }
+
+      let handled = false;
+      if (event.key !== undefined && isPwrOn) {
+        // Handle the event with KeyboardEvent.key and set handled true.
+        if (event.key.toUpperCase() === kbdKey) {
+          padBtnRef.current!.classList.add('active');
+          window.addEventListener('keyup', handleKeyup, true);
+          handled = true;
+        }
+      } else if (event.keyCode !== undefined && isPwrOn) {
+        // Handle the event with KeyboardEvent.keyCode and set handled true.
+        if (event.keyCode === keyCode) {
+          padBtnRef.current!.classList.add('active');
+          window.addEventListener('keyup', handleKeyup, true);
+          handled = true;
+        }
+      }
+
+      if (handled) {
+        // Suppress "double action" if event handled
+        event.preventDefault();
+      }
+    }
+
+    window.addEventListener('keydown', handleKeydown, true);
+    return () => {
+      // cleanup event listener on unmount
+      window.removeEventListener('keydown', handleKeydown, true);
     };
-    // this.audioElement = React.createRef<HTMLAudioElement>();
-    this.handleClick = this.handleClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.setPadClassName = this.setPadClassName.bind(this);
-  }
+  }, [kbdKey, keyCode, isPwrOn]);
 
-  componentDidMount() {
-    this.audioElement.current!.volume = this.props.volume;
-    document.addEventListener('keydown', this.handleKeyDown);
-  }
+  React.useEffect(() => {
+    audioRef.current!.volume = volume;
+  }, [volume]);
 
-  componentDidUpdate() {
-    this.audioElement.current!.volume = this.props.volume;
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  setPadClassName(str: string) {
-    this.setState(() => ({ padClassName: str }));
-  }
-
-  handleClick() {
-    if (this.props.isPwrOn) {
-      this.audioElement.current!.play();
-      this.props.displaySoundName(this.props.name);
-      this.setPadClassName(clickedPadClassName);
-      setTimeout(this.setPadClassName, 80, defaultPadClassName);
+  function handleClick() {
+    if (isPwrOn) {
+      audioRef.current!.play();
+      displaySoundName(name);
     }
   }
 
-  handleKeyDown(e: any) {
-    if (e.keyCode === this.props.keyCode) {
-      this.audioElement.current!.click();
-    }
-  }
-
-  render() {
-    // console.log("Pad " + this.props.kbdKey + " render called");
-    return (
-      <div
-        id={this.props.padId}
-        className={this.state.padClassName}
-        data-name={this.props.name}
-        onClick={this.handleClick}
-        // onKeyDown={this.handleKeyDown}
-      >
-        {this.props.kbdKey}
-        <audio
-          id={this.props.audioId}
-          className="clip"
-          src={this.props.source}
-          data-type="audio/mpeg"
-          ref={this.audioElement}
-        ></audio>
-      </div>
-    );
-  }
+  return (
+    <button id={id} className="drum-pad" onClick={handleClick} ref={padBtnRef}>
+      {kbdKey}
+      <audio id={kbdKey} className="clip" src={source} ref={audioRef}></audio>
+    </button>
+  );
 }
+
+export default Pad;
