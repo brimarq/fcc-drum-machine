@@ -36,20 +36,3 @@
   font-size: 1.1em;
   cursor: pointer;
 }
-
-/* .drum-pad-clicked {
-  background: radial-gradient(
-    circle,
-    rgba(15, 133, 255, 1) 0%,
-    rgba(15, 133, 255, 1) 25%,
-    rgba(4, 116, 233, 1) 50%,
-    rgba(0, 95, 193, 1) 90%
-  );
-  box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
-    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
-  -webkit-box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
-    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
-  -moz-box-shadow: inset -2px 2px 5px 0px rgba(0, 0, 0, 0.5),
-    inset 2px -2px 5px 0px rgba(255, 255, 255, 0.5);
-  font-size: 1.063em;
-} */
