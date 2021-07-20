@@ -5,17 +5,13 @@ import Pad from './Pad';
 import padData from './padData';
 import './DrumMachine.css';
 
-function DrumMachine(props: any) {
+function DrumMachine() {
   const [isPwrOn, setIsPwrOn] = React.useState(true);
   const [display, setDisplay] = React.useState('Bank 1');
   const [isBank1, setIsBank1] = React.useState(true);
   const [volume, setVolume] = React.useState(0.4);
 
   const bank = isBank1 ? padData.soundBanks[0] : padData.soundBanks[1];
-
-  function displaySoundName(name: string) {
-    setDisplay(name);
-  }
 
   function handleChange(event: any) {
     if (event.target.name === 'power') {
@@ -66,7 +62,7 @@ function DrumMachine(props: any) {
               keyCode={pad.keyCode}
               source={padData.baseUrl + pad.sound}
               volume={volume}
-              displaySoundName={displaySoundName}
+              setDisplay={setDisplay}
               isPwrOn={isPwrOn}
             />
           );

@@ -1,6 +1,8 @@
 import React from 'react';
 import './Pad.css';
 
+// React.Dispatch<React.SetStateAction<string>>
+
 interface PadProps {
   id: string;
   name: string;
@@ -8,21 +10,14 @@ interface PadProps {
   keyCode: number;
   source: string;
   volume: number;
-  displaySoundName: (name: string) => void;
+  // displaySoundName: (name: string) => void;
+  setDisplay: React.Dispatch<React.SetStateAction<string>>;
   isPwrOn: boolean;
 }
 
 function Pad(props: PadProps) {
-  const {
-    id,
-    name,
-    kbdKey,
-    keyCode,
-    source,
-    volume,
-    displaySoundName,
-    isPwrOn,
-  } = props;
+  const { id, name, kbdKey, keyCode, source, volume, setDisplay, isPwrOn } =
+    props;
 
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const padBtnRef = React.useRef<HTMLButtonElement>(null);
@@ -80,7 +75,7 @@ function Pad(props: PadProps) {
   function handleClick() {
     if (isPwrOn) {
       audioRef.current!.play();
-      displaySoundName(name);
+      setDisplay(name);
     }
   }
 
