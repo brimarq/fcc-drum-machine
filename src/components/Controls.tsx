@@ -1,4 +1,6 @@
 import React from 'react';
+import Switch from './Switch';
+import Slider from './Slider';
 import './Controls.css';
 
 interface ControlsProps {
@@ -13,56 +15,14 @@ function Controls(props: ControlsProps) {
     <div id="controls">
       <p>FCC DrumMachine</p>
       <div id="display">{display}</div>
-
-      <div className="switch-container">
-        <span className="switch-title">Power</span>
-        <div className="switch">
-          <input
-            type="checkbox"
-            name="power"
-            id="switch-power"
-            className="switch-checkbox"
-            defaultChecked
-            onChange={handleChange}
-          />
-          <label className="switch-label" htmlFor="switch-power">
-            <span className="switch-inner"></span>
-            <span className="switch-switch"></span>
-          </label>
-        </div>
-      </div>
-
-      <div className="switch-container">
-        <span className="switch-title">Bank</span>
-        <div className="switch">
-          <input
-            type="checkbox"
-            name="bank"
-            id="switch-bank"
-            className="switch-checkbox"
-            defaultChecked
-            onChange={handleChange}
-          />
-          <label className="switch-label" htmlFor="switch-bank">
-            <span className="switch-inner"></span>
-            <span className="switch-switch"></span>
-          </label>
-        </div>
-      </div>
-
-      <div className="slider-container">
-        <span className="slider-title">Volume</span>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step=".01"
-          defaultValue={volume}
-          className="slider"
-          id="myRange"
-          onChange={handleChange}
-        />
-      </div>
+      <Switch name="Power" handleChange={handleChange} />
+      <Switch name="Bank" handleChange={handleChange} />
+      <Slider
+        id="volume"
+        label="Volume"
+        value={volume.toString()}
+        handleChange={handleChange}
+      />
     </div>
   );
 }
