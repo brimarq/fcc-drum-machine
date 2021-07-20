@@ -38,13 +38,13 @@ function DrumMachine(props: any) {
 
   return (
     <div id="drum-machine">
+      <Controls display={display} volume={volume} handleChange={handleChange} />
       <PadBank
         isPwrOn={isPwrOn}
         volume={volume}
         isBank1={isBank1}
         displaySoundName={displaySoundName}
       />
-      <Controls display={display} volume={volume} handleChange={handleChange} />
     </div>
   );
 }
