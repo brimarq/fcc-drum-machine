@@ -1,0 +1,48 @@
+/*** VOLUME SLIDER ***/
+.slider-container {
+  display: grid;
+  width: 80%; /* Width of the outside container */
+  justify-self: center;
+}
+
+.slider-title {
+  /* width: 100%; */
+  text-align: left;
+  margin-left: 10px;
+}
+/* The slider itself */
+.slider {
+  -webkit-appearance: none; /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: var(--switch-height);
+  border-radius: var(--switch-border-radius);
+  border: var(--switch-label-border);
+  background: var(--switch-inner-on-bgcolor);
+  outline: none; /* Remove outline */
+  justify-self: center;
+}
+
+.slider::-webkit-slider-thumb {
+  position: relative;
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  border-radius: 50%;
+  background-color: hsl(0, 0%, 90%);
+  background-image: var(--brushed-metal-radial);
+  box-shadow: -0.125em 0.125em 0.125em #6a6a6a;
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+  position: relative;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  border-radius: 50%;
+  background-color: hsl(0, 0%, 90%);
+  background-image: var(--brushed-metal-radial);
+  box-shadow: -0.125em 0.125em 0.125em #6a6a6a;
+  cursor: pointer; /* Cursor on hover */
+}
