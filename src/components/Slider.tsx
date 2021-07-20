@@ -6,13 +6,21 @@ interface SliderProps {
   label: string;
   value: string;
   handleChange: (event: any) => void;
-  // min?: string;
-  // max?: string;
-  // step?: string;
+  min?: string;
+  max?: string;
+  step?: string;
 }
 
 function Slider(props: SliderProps) {
-  const { id, label, value, handleChange } = props;
+  const {
+    id,
+    label,
+    value,
+    handleChange,
+    min = '0',
+    max = '1',
+    step = '0.01',
+  } = props;
   return (
     <div className="slider-container">
       {/* <span className="slider-title">{label}</span> */}
@@ -22,8 +30,9 @@ function Slider(props: SliderProps) {
       <input
         id={id}
         type="range"
-        max="1"
-        step="0.01"
+        min={min}
+        max={max}
+        step={step}
         value={value}
         className="slider"
         onChange={handleChange}
