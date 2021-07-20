@@ -1,0 +1,110 @@
+/*** CHECKBOX SWITCHES ***/
+
+.switch-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  width: 80%;
+  justify-self: center;
+}
+
+.switch-title {
+  margin-left: 10px;
+  justify-self: start;
+}
+
+.switch {
+  position: relative;
+  width: 55px;
+  justify-self: end;
+  margin-right: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.switch-checkbox {
+  display: none;
+}
+
+.switch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: var(--switch-label-border);
+  border-radius: var(--switch-border-radius);
+}
+
+.switch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.1s ease-in 0s;
+}
+
+.switch-inner::before,
+.switch-inner::after {
+  display: inline-block;
+  width: 50%;
+  height: var(--switch-height);
+  padding: 0;
+  line-height: var(--switch-height);
+  font-size: 10px;
+  color: white;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.switch-inner::before {
+  text-align: left;
+  content: 'ON';
+  padding-left: 6px;
+  background-color: var(--switch-inner-on-bgcolor);
+  color: #ffffff;
+}
+
+.switch-inner::after {
+  content: 'OFF';
+  padding-right: 6px;
+  background-color: orange;
+  color: #666666;
+  text-align: right;
+}
+
+.switch label[for='switch-bank'] .switch-inner::before {
+  content: '1';
+  padding-left: 12px;
+}
+
+.switch label[for='switch-bank'] .switch-inner::after {
+  content: '2';
+  padding-right: 12px;
+  background-color: var(--switch-inner-on-bgcolor);
+  color: #ffffff;
+}
+
+.switch-switch {
+  display: block;
+  width: 25px;
+  height: 25px;
+  margin: 1px 0 0 0; /* (switch height - .switch-switch size) / 2 >= 0 ?  equation result : 0 */
+  /* margin-bottom: 1px; */
+  background-color: hsl(0, 0%, 90%);
+  background-image: var(--brushed-metal-radial);
+  box-shadow: -0.125em 0.125em 0.125em #6a6a6a;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 30px; /* .switch width - .switch-switch width - .switch-switch margin[l+r] - border[l+r] */
+  border-radius: var(--switch-border-radius);
+  transition: all 0.1s ease-in 0s;
+}
+
+.switch-checkbox:checked + .switch-label .switch-inner {
+  margin-left: 0;
+}
+.switch-checkbox:checked + .switch-label .switch-switch {
+  right: 0px;
+}
