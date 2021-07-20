@@ -23,7 +23,6 @@ function Slider(props: SliderProps) {
   } = props;
   return (
     <div className="slider-container">
-      {/* <span className="slider-title">{label}</span> */}
       <label htmlFor={id} className="slider-title">
         {label}
       </label>
