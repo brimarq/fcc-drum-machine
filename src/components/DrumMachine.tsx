@@ -41,8 +41,8 @@ function DrumMachine() {
       <div id="controls">
         <p>FCC DrumMachine</p>
         <div id="display">{display}</div>
-        <Switch name="Power" handleChange={handleChange} />
-        <Switch name="Bank" handleChange={handleChange} />
+        <Switch id="switch-power" label="Power" handleChange={handleChange} />
+        <Switch id="switch-bank" label="Bank" handleChange={handleChange} />
         <Slider
           id="volume"
           label="Volume"

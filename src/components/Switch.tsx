@@ -2,29 +2,27 @@ import React from 'react';
 import './Switch.css';
 
 interface SwitchProps {
-  name: string;
+  id: string;
+  label: string;
   handleChange: (event: any) => void;
 }
 
 function Switch(props: SwitchProps) {
-  const { name, handleChange } = props;
+  const { id, label, handleChange } = props;
 
   return (
     <div className="switch-container">
-      <span className="switch-title">{name}</span>
+      <span className="switch-title">{label}</span>
       <div className="switch">
         <input
+          id={id}
           type="checkbox"
-          name={name.toLowerCase()}
-          id={`switch-${name.toLowerCase()}`}
+          name={label.toLowerCase()}
           className="switch-checkbox"
           defaultChecked
           onChange={handleChange}
         />
-        <label
-          className="switch-label"
-          htmlFor={`switch-${name.toLowerCase()}`}
-        >
+        <label className="switch-label" htmlFor={id}>
           <span className="switch-inner"></span>
           <span className="switch-switch"></span>
         </label>
