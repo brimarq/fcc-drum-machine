@@ -14,25 +14,27 @@ function DrumMachine() {
   const bank = isBank1 ? padData.soundBanks[0] : padData.soundBanks[1];
 
   function handleChange(event: any) {
-    if (event.target.name === 'power') {
-      setDisplay(isPwrOn ? '' : 'Power On');
-      setIsPwrOn(prevIsPwrOn => !prevIsPwrOn);
-    } else if (event.target.name === 'bank') {
-      if (isPwrOn) {
-        setDisplay(isBank1 ? 'Bank 2' : 'Bank 1');
-        setIsBank1(prevIsBank1 => !prevIsBank1);
-      } else {
-        setIsBank1(prevIsBank1 => !prevIsBank1);
-      }
-    } else {
-      let newVolume = event.target.value;
-
-      if (isPwrOn) {
-        setVolume(newVolume);
-        setDisplay(`Volume: ${Math.round(newVolume * 100)}%`);
-      } else {
-        setVolume(newVolume);
-      }
+    switch (event.target.id) {
+      case 'switch-power':
+        setDisplay(isPwrOn ? '' : 'Power On');
+        setIsPwrOn(prevIsPwrOn => !prevIsPwrOn);
+        break;
+      case 'switch-bank':
+        if (isPwrOn) {
+          setDisplay(isBank1 ? 'Bank 2' : 'Bank 1');
+          setIsBank1(prevIsBank1 => !prevIsBank1);
+        } else {
+          setIsBank1(prevIsBank1 => !prevIsBank1);
+        }
+        break;
+      default:
+        let newVolume = event.target.value;
+        if (isPwrOn) {
+          setVolume(newVolume);
+          setDisplay(`Volume: ${Math.round(newVolume * 100)}%`);
+        } else {
+          setVolume(newVolume);
+        }
     }
   }
 
