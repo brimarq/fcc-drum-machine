@@ -2,7 +2,7 @@ import React from 'react';
 import Switch from './Switch';
 import Slider from './Slider';
 import Pad from './Pad';
-import padData from './padData';
+import soundData from './soundData';
 import './DrumMachine.css';
 
 function DrumMachine() {
@@ -11,7 +11,7 @@ function DrumMachine() {
   const [isBank1, setIsBank1] = React.useState(true);
   const [volume, setVolume] = React.useState(0.4);
 
-  const bank = isBank1 ? padData.soundBanks[0] : padData.soundBanks[1];
+  const bank = isBank1 ? soundData.banks[0] : soundData.banks[1];
 
   function handleChange(event: any) {
     switch (event.target.id) {
@@ -62,7 +62,7 @@ function DrumMachine() {
               name={pad.name}
               kbdKey={pad.kbdKey}
               keyCode={pad.keyCode}
-              source={padData.baseUrl + pad.sound}
+              source={soundData.baseUrl + pad.audioFile}
               volume={volume}
               setDisplay={setDisplay}
               isPwrOn={isPwrOn}

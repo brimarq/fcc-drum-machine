@@ -1,8 +1,6 @@
 import React from 'react';
 import './Pad.css';
 
-// React.Dispatch<React.SetStateAction<string>>
-
 interface PadProps {
   id: string;
   name: string;
@@ -10,7 +8,6 @@ interface PadProps {
   keyCode: number;
   source: string;
   volume: number;
-  // displaySoundName: (name: string) => void;
   setDisplay: React.Dispatch<React.SetStateAction<string>>;
   isPwrOn: boolean;
 }
